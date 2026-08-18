@@ -1,0 +1,16 @@
+// examples/hello.with
+with HelloWorld {
+    say hello -> {
+        Console.writeLine("Hello, With!");
+    }
+}
+
+
+//2
+func-> main() {
+    with->go{
+        with.print("Hello, With!");
+    }
+}
+
+//3

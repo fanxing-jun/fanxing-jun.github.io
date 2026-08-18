@@ -1,0 +1,7 @@
+// tests/examples/hello.cplus
+module hello;
+
+func main() -> int {
+    print("Hello, World!");
+    return 0;
+}

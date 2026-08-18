@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>fanxing-jun 的网站</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f2f9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 48px;
+            padding: 48px 40px 40px;
+            box-shadow: 0 30px 60px rgba(0, 20, 40, 0.12), 0 8px 24px rgba(0, 20, 40, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        /* 头部 ———— 品牌标识大字号，置顶 */
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .header .brand-top {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #0b1e33;
+            background: linear-gradient(135deg, #1a5fc7, #2b7be4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .header .brand-top small {
+            font-size: 28px;
+            font-weight: 300;
+            background: none;
+            -webkit-text-fill-color: #4a6479;
+            color: #4a6479;
+        }
+
+        .header .sub-head {
+            font-size: 18px;
+            color: #4a6479;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            margin-top: 4px;
+        }
+
+        .header .icon-wrap {
+            display: inline-flex;
+            background: linear-gradient(135deg, #2b7be4, #1a5fc7);
+            padding: 14px;
+            border-radius: 24px;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 24px rgba(26, 95, 199, 0.25);
+        }
+
+        .header .icon-wrap svg {
+            width: 40px;
+            height: 40px;
+            fill: none;
+            stroke: #fff;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .header .action-hint {
+            color: #6a859c;
+            font-size: 15px;
+            margin-top: 6px;
+        }
+
+        /* 卡片网格 */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .container {
+                padding: 28px 20px 24px;
+                border-radius: 32px;
+            }
+
+            .header .brand-top {
+                font-size: 36px;
+            }
+            .header .brand-top small {
+                font-size: 22px;
+            }
+        }
+
+        /* 单个卡片 */
+        .card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 32px 28px 28px;
+            box-shadow: 0 4px 16px rgba(0, 20, 40, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2b7be4, #6aa8f5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 36px rgba(26, 95, 199, 0.12);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card .folder-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, #eef4fb, #dce8f5);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            flex-shrink: 0;
+        }
+
+        .card .folder-icon svg {
+            width: 38px;
+            height: 38px;
+            stroke: #2b7be4;
+            stroke-width: 1.8;
+            fill: none;
+        }
+
+        .card .folder-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0b1e33;
+            word-break: break-all;
+            margin-bottom: 6px;
+        }
+
+        .card .folder-meta {
+            font-size: 14px;
+            color: #6a859c;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card .folder-meta .dot {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: #b8cddf;
+            border-radius: 50%;
+        }
+
+        .card .status-badge {
+            font-size: 13px;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-badge.exists {
+            background: #e6f4ea;
+            color: #1e7e34;
+        }
+
+        .status-badge.missing {
+            background: #fce8e6;
+            color: #b3261e;
+        }
+
+        .card .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            width: 100%;
+            max-width: 220px;
+            margin-top: 4px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2b7be4, #1a5fc7);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(26, 95, 199, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 28px rgba(26, 95, 199, 0.35);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .btn-secondary {
+            background: #eef2f6;
+            color: #4a6479;
+            cursor: default;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8ef;
+        }
+
+        .btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2.5px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .btn.loading .spinner {
+            display: block;
+        }
+
+        .btn.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 底部提示 */
+        .footer-note {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 13px;
+            color: #7a96af;
+            border-top: 1px solid rgba(0, 20, 40, 0.06);
+            padding-top: 24px;
+            letter-spacing: 0.2px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .footer-note .brand {
+            font-size: 12px;
+            color: #9bb3c9;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-note .brand a {
+            color: #2b7be4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-note .brand a:hover {
+            text-decoration: underline;
+        }
+
+        /* Toast 通知 */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #1a2a3a;
+            color: #fff;
+            padding: 14px 30px;
+            border-radius: 60px;
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1000;
+            white-space: nowrap;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.error {
+            background: #b3261e;
+        }
+
+        .toast.success {
+            background: #1e7e34;
+        }
+
+        @media (max-width: 480px) {
+            .toast {
+                font-size: 13px;
+                padding: 12px 20px;
+                white-space: normal;
+                max-width: 90%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Toast 通知 -->
+    <div class="toast" id="toast"></div>
+
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 头部 ———— 品牌大字置顶 -->
+        <div class="header">
+            <div class="icon-wrap">
+                <svg viewBox="0 0 24 24">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                </svg>
+            </div>
+            <div class="brand-top">
+                fanxing-jun的网站<small>·</small>
+            </div>
+            <div class="sub-head">文件夹下载工具</div>
+            <div class="action-hint">点击下方按钮，即可打包下载对应的文件夹</div>
+        </div>
+
+        <!-- 卡片网格 -->
+        <div class="grid" id="cardGrid">
+            <!-- with_compiler 卡片 -->
+            <div class="card" data-folder="with_compiler">
+                <div class="folder-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                        <path d="M12 11v6" />
+                        <path d="M9 14h6" />
+                    </svg>
+                </div>
+                <div class="folder-name">with_compiler</div>
+                <div class="folder-meta">
+                    <span class="status-badge exists" id="status-with_compiler">● 已就绪</span>
+                    <span class="dot"></span>
+                    <span id="size-with_compiler">—</span>
+                </div>
+                <button class="btn btn-primary" id="btn-with_compiler" data-folder="with_compiler">
+                    <span class="spinner"></span>
+                    <span class="btn-text">📥 下载</span>
+                </button>
+            </div>
+
+            <!-- c+_compiler 卡片 -->
+            <div class="card" data-folder="c+_compiler">
+                <div class="folder-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                        <polyline points="16 18 22 12 16 6" />
+                        <polyline points="8 6 2 12 8 18" />
+                    </svg>
+                </div>
+                <div class="folder-name">c+_compiler</div>
+                <div class="folder-meta">
+                    <span class="status-badge exists" id="status-c+_compiler">● 已就绪</span>
+                    <span class="dot"></span>
+                    <span id="size-c+_compiler">—</span>
+                </div>
+                <button class="btn btn-primary" id="btn-c+_compiler" data-folder="c+_compiler">
+                    <span class="spinner"></span>
+                    <span class="btn-text">📥 下载</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 底部 -->
+        <div class="footer-note">
+            <div class="brand">2026 <a href="#">fanxing-jun</a> 部署</div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ---- DOM 引用 ----
+            const toastEl = document.getElementById('toast');
+            const btnWith = document.getElementById('btn-with_compiler');
+            const btnCpp = document.getElementById('btn-c+_compiler');
+            const statusWith = document.getElementById('status-with_compiler');
+            const statusCpp = document.getElementById('status-c+_compiler');
+            const sizeWith = document.getElementById('size-with_compiler');
+            const sizeCpp = document.getElementById('size-c+_compiler');
+
+            // ---- 工具函数 ----
+            function showToast(msg, type) {
+                toastEl.textContent = msg;
+                toastEl.className = 'toast show';
+                if (type === 'error') toastEl.classList.add('error');
+                else if (type === 'success') toastEl.classList.add('success');
+                else toastEl.classList.remove('error', 'success');
+
+                clearTimeout(toastEl._hideTimer);
+                toastEl._hideTimer = setTimeout(() => {
+                    toastEl.classList.remove('show');
+                }, 3500);
+            }
+
+            // 格式化文件大小
+            function formatSize(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                const val = (bytes / Math.pow(k, i)).toFixed(1);
+                return val + ' ' + sizes[i];
+            }
+
+            // ---- 获取文件夹状态 ----
+            async function fetchFolderStatus() {
+                try {
+                    const resp = await fetch('/api/status');
+                    if (!resp.ok) throw new Error('获取状态失败');
+                    const data = await resp.json();
+                    return data;
+                } catch (err) {
+                    console.error('获取状态失败:', err);
+                    showToast('无法连接到服务器，请检查服务是否运行', 'error');
+                    return null;
+                }
+            }
+
+            // ---- 更新UI ----
+            function updateUI(statusData) {
+                if (!statusData) return;
+
+                // with_compiler
+                const w = statusData['with_compiler'];
+                if (w) {
+                    if (w.exists) {
+                        statusWith.textContent = '● 已就绪';
+                        statusWith.className = 'status-badge exists';
+                        sizeWith.textContent = formatSize(w.size);
+                        btnWith.disabled = false;
+                        btnWith.className = 'btn btn-primary';
+                        btnWith.querySelector('.btn-text').textContent = '📥 下载';
+                    } else {
+                        statusWith.textContent = '✕ 未找到';
+                        statusWith.className = 'status-badge missing';
+                        sizeWith.textContent = '—';
+                        btnWith.disabled = true;
+                        btnWith.className = 'btn btn-secondary';
+                        btnWith.querySelector('.btn-text').textContent = '⛔ 不可用';
+                    }
+                }
+
+                // c+_compiler
+                const c = statusData['c+_compiler'];
+                if (c) {
+                    if (c.exists) {
+                        statusCpp.textContent = '● 已就绪';
+                        statusCpp.className = 'status-badge exists';
+                        sizeCpp.textContent = formatSize(c.size);
+                        btnCpp.disabled = false;
+                        btnCpp.className = 'btn btn-primary';
+                        btnCpp.querySelector('.btn-text').textContent = '📥 下载';
+                    } else {
+                        statusCpp.textContent = '✕ 未找到';
+                        statusCpp.className = 'status-badge missing';
+                        sizeCpp.textContent = '—';
+                        btnCpp.disabled = true;
+                        btnCpp.className = 'btn btn-secondary';
+                        btnCpp.querySelector('.btn-text').textContent = '⛔ 不可用';
+                    }
+                }
+            }
+
+            // ---- 下载处理 ----
+            async function handleDownload(folderName, btn) {
+                if (btn.disabled) return;
+
+                // 进入加载状态
+                btn.disabled = true;
+                btn.classList.add('loading');
+
+                try {
+                    // 使用 fetch 发起下载请求
+                    const encoded = encodeURIComponent(folderName);
+                    const url = `/download/${encoded}`;
+
+                    const resp = await fetch(url);
+                    if (!resp.ok) {
+                        let errMsg = '下载失败';
+                        try {
+                            const text = await resp.text();
+                            if (text) errMsg = text;
+                        } catch (_) { /* ignore */ }
+                        throw new Error(errMsg);
+                    }
+
+                    // 获取文件数据
+                    const blob = await resp.blob();
+
+                    // 从 Content-Disposition 提取文件名，或使用默认
+                    const disposition = resp.headers.get('Content-Disposition');
+                    let filename = `${folderName}.zip`;
+                    if (disposition) {
+                        const match = disposition.match(/filename\*?=(?:UTF-8'')?([^;\n]+)/);
+                        if (match) {
+                            filename = decodeURIComponent(match[1].replace(/['"]/g, ''));
+                        }
+                    }
+
+                    // 触发下载
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // 释放 Blob URL
+                    setTimeout(() => URL.revokeObjectURL(link.href), 5000);
+
+                    showToast(`✅ ${folderName} 下载成功！`, 'success');
+
+                } catch (err) {
+                    console.error('下载失败:', err);
+                    showToast(`❌ ${folderName} 下载失败: ${err.message || '未知错误'}`, 'error');
+                } finally {
+                    // 恢复按钮状态
+                    btn.classList.remove('loading');
+                    // 重新检查状态（如果文件夹不存在，按钮会被禁用）
+                    const statusData = await fetchFolderStatus();
+                    if (statusData) updateUI(statusData);
+                    // 如果存在则启用，否则保持禁用
+                    const info = statusData ? statusData[folderName] : null;
+                    if (info && info.exists) {
+                        btn.disabled = false;
+                        btn.className = 'btn btn-primary';
+                        btn.querySelector('.btn-text').textContent = '📥 下载';
+                    } else {
+                        btn.disabled = true;
+                        btn.className = 'btn btn-secondary';
+                        btn.querySelector('.btn-text').textContent = '⛔ 不可用';
+                    }
+                }
+            }
+
+            // ---- 初始化 ----
+            async function init() {
+                // 绑定按钮事件
+                btnWith.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    handleDownload('with_compiler', this);
+                });
+
+                btnCpp.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    handleDownload('c+_compiler', this);
+                });
+
+                // 首次加载获取状态
+                const data = await fetchFolderStatus();
+                if (data) {
+                    updateUI(data);
+                } else {
+                    // 如果无法获取状态，显示错误信息
+                    statusWith.textContent = '⚠ 连接失败';
+                    statusWith.className = 'status-badge missing';
+                    statusCpp.textContent = '⚠ 连接失败';
+                    statusCpp.className = 'status-badge missing';
+                    btnWith.disabled = true;
+                    btnWith.className = 'btn btn-secondary';
+                    btnWith.querySelector('.btn-text').textContent = '⛔ 不可用';
+                    btnCpp.disabled = true;
+                    btnCpp.className = 'btn btn-secondary';
+                    btnCpp.querySelector('.btn-text').textContent = '⛔ 不可用';
+                }
+
+                // 每 30 秒自动刷新状态
+                setInterval(async () => {
+                    const data = await fetchFolderStatus();
+                    if (data) updateUI(data);
+                }, 30000);
+            }
+
+            // 页面加载完成后初始化
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+
+</body>
+</html>
