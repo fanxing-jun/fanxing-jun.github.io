@@ -1,296 +1,741 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fanxing-jun</title>
-    <style>
-     /* ===== 全局重置与排版 ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    /* ----- 全局重置 & 设计变量 ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-  font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-  background: #f8fafc;
-  padding: 2rem;
-  line-height: 1.6;
-  color: #0b1a2e;
-}
+    :root {
+      --blue: #0078d4;
+      --blue-dark: #005a9e;
+      --blue-light: #deecf9;
+      --gray-50: #faf9f8;
+      --gray-100: #f3f2f1;
+      --gray-150: #edebe9;
+      --gray-200: #e1dfdd;
+      --gray-300: #d2d0ce;
+      --gray-600: #605e5c;
+      --gray-800: #323130;
+      --gray-900: #201f1e;
+      --shadow-sm: 0 1.6px 3.6px rgba(0,0,0,0.08), 0 0.3px 0.9px rgba(0,0,0,0.06);
+      --shadow-md: 0 6.4px 14.4px rgba(0,0,0,0.10), 0 1.2px 3.6px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12.8px 28.8px rgba(0,0,0,0.12), 0 2.4px 7.2px rgba(0,0,0,0.08);
+      --font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+    }
 
-/* ===== H2 标题装饰 ===== */
-h2 {
-  position: relative;
-  font-size: 2.2rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: #0f2b45;
-  margin: 2.5rem 0 1.5rem 0;
-  padding-bottom: 0.75rem;
-  border-bottom: 4px solid transparent;
-  border-image: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899) 1;
-  display: inline-block;
-  background: linear-gradient(145deg, #0f2b45, #1e4a7a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 2px 12px rgba(59, 130, 246, 0.15);
-}
+    body {
+      font-family: var(--font-family);
+      background: #ffffff;
+      color: var(--gray-900);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-h2::before {
-  content: "◆ ";
-  font-size: 1.8rem;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  opacity: 0.7;
-  margin-right: 0.2rem;
-}
+    /* ----- 顶部导览栏 ----- */
+    .navbar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 54px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-h2::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 60%;
-  height: 4px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-  border-radius: 4px;
-  opacity: 0.6;
-}
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      height: 100%;
+    }
 
-/* ===== H4 标题装饰 ===== */
-h4 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #1e3a5f;
-  margin: 1.8rem 0 1rem 0;
-  padding-left: 1.2rem;
-  position: relative;
-  letter-spacing: 0.01em;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--gray-900);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
 
-h4::before {
-  content: "▌";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  font-size: 1.6rem;
-  color: #8b5cf6;
-  background: linear-gradient(180deg, #3b82f6, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  opacity: 0.8;
-}
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      background: linear-gradient(135deg, #0078d4, #00b7c3);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0, 120, 212, 0.3);
+    }
 
-h4::after {
-  content: "";
-  flex: 1;
-  height: 2px;
-  background: linear-gradient(90deg, #8b5cf6, transparent);
-  margin-left: 0.5rem;
-  opacity: 0.3;
-  border-radius: 2px;
-}
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      height: 100%;
+      align-items: center;
+    }
 
-/* ===== A 链接装饰 - 快速响应版 ===== */
-a {
-  display: inline-block;
-  text-decoration: none;
-  font-weight: 500;
-  color: #2563eb;
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  /* 所有过渡缩短到 0.15s，变化更快 */
-  transition: all 0.15s ease;
-  position: relative;
-  background: transparent;
-  border: 1px solid transparent;
-}
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray-800);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
 
-/* 链接下划线动画 — 从中间展开，同样加快 */
-a::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 2px;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-  transition: all 0.15s ease;
-  transform: translateX(-50%);
-  border-radius: 4px;
-}
+    .nav-links a:hover {
+      background: var(--gray-100);
+      color: var(--gray-900);
+    }
 
-/* 悬浮时下划线瞬间展开 */
-a:hover::after {
-  width: 80%;
-}
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      color: var(--gray-800);
+      font-size: 0.9rem;
+    }
 
-/* 悬浮效果 - 响应迅速 */
-a:hover {
-  color: #1d4ed8;
-  background: rgba(59, 130, 246, 0.12);
-  border-color: rgba(59, 130, 246, 0.25);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-}
+    .nav-right a {
+      text-decoration: none;
+      color: inherit;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+    }
 
-/* 访问过的链接 */
-a:visited {
-  color: #7c3aed;
-}
+    .nav-right a:hover {
+      background: var(--gray-100);
+    }
 
-/* 聚焦态 (键盘导航) */
-a:focus-visible {
-  outline: 3px solid #8b5cf6;
-  outline-offset: 4px;
-  border-radius: 6px;
-  transition: outline 0.1s ease;
-}
+    /* ----- 主体容器 ----- */
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 5%;
+    }
 
-/* 链接前的图标装饰 (仅对非空文本链接) */
-a:not([href^="#"]):not([href=""])::before {
-  content: "↗ ";
-  font-size: 0.9em;
-  opacity: 0.6;
-  transition: opacity 0.1s ease;
-}
+    /* ----- 英雄区域 ----- */
+    .hero {
+      padding: 80px 0 72px;
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      flex-wrap: wrap;
+    }
 
-a:hover::before {
-  opacity: 1;
-}
+    .hero-content {
+      flex: 1 1 460px;
+    }
 
-/* 如果是纯图标或按钮类链接，取消 before */
-a[href^="#"]::before,
-a[href=""]::before {
-  content: none;
-}
+    .hero-eyebrow {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
 
-/* ===== 额外：链接组/卡片场景下的美化 ===== */
-/* 若链接在 h2/h4 附近，增加间距 */
-h2 + a,
-h4 + a {
-  margin-top: 0.25rem;
-}
+    .hero h1 {
+      font-size: 3.6rem;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--gray-900);
+      margin-bottom: 24px;
+    }
 
-/* 多个链接并排时 */
-a + a {
-  margin-left: 0.3rem;
-}
+    .hero h1 .accent {
+      background: linear-gradient(135deg, #0078d4, #00b7c3);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
 
-/* ===== 响应式微调 ===== */
-@media (max-width: 640px) {
-  h2 {
-    font-size: 1.8rem;
-    padding-bottom: 0.5rem;
-  }
-  h2::before {
-    font-size: 1.4rem;
-  }
-  h4 {
-    font-size: 1.1rem;
-    padding-left: 1rem;
-  }
-  a {
-    padding: 0.2rem 0.4rem;
-    font-size: 0.95rem;
-  }
-}
-    </style>
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--gray-600);
+      max-width: 620px;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--blue);
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 12px 28px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: background 0.15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-dark);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--gray-900);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 12px 28px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      border: 1px solid var(--gray-300);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray-100);
+      border-color: var(--gray-600);
+    }
+
+    .hero-visual {
+      flex: 1 1 380px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 560px;
+      background: linear-gradient(145deg, #f0f6ff, #ffffff);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      padding: 8px;
+      border: 1px solid var(--gray-150);
+    }
+
+    .hero-image svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 18px;
+    }
+
+    /* ----- 下载卡片区域 ----- */
+    .download-section {
+      padding: 24px 0 96px;
+    }
+
+    .section-header {
+      margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+      font-size: 2.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      font-size: 1.05rem;
+      color: var(--gray-600);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    /* 卡片基础 */
+    .card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-150);
+      padding: 32px 28px 28px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--gray-300);
+    }
+
+    /* 卡片顶部渐变条 — 三种颜色主题 */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    /* 第一块：C+ — 青到绿 */
+    .card-cplus::before {
+      background: linear-gradient(90deg, #0d9488, #22c55e);
+    }
+
+    .card-cplus .card-icon {
+      background: linear-gradient(135deg, #0d9488, #22c55e);
+      color: white;
+    }
+
+    .card-cplus .card-footer {
+      color: #0d9488;
+    }
+
+    /* 第二块：with — 浅蓝到青 */
+    .card-with::before {
+      background: linear-gradient(90deg, #6ab0e6, #14b8a6);
+    }
+
+    .card-with .card-icon {
+      background: linear-gradient(135deg, #6ab0e6, #14b8a6);
+      color: white;
+    }
+
+    .card-with .card-footer {
+      color: #0e7c8c;
+    }
+
+    /* 第三块：MingOS — 蓝、粉、紫 */
+    .card-mingos::before {
+      background: linear-gradient(90deg, #3b82f6, #d946ef, #8b5cf6);
+    }
+
+    .card-mingos .card-icon {
+      background: linear-gradient(145deg, #3b82f6, #d946ef, #8b5cf6);
+      color: white;
+    }
+
+    .card-mingos .card-footer {
+      color: #8b5cf6;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 22px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .card h3 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--gray-900);
+      line-height: 1.2;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--gray-150);
+      padding-top: 20px;
+      margin-top: auto;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .card-footer .link-text {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+
+    .card:hover .card-footer .link-text {
+      gap: 10px;
+    }
+
+    .card-footer .arrow {
+      font-size: 1.1rem;
+      transition: transform 0.2s;
+    }
+
+    .card:hover .card-footer .arrow {
+      transform: translateX(4px);
+    }
+
+    /* ----- 页脚 ----- */
+    .footer {
+      background: var(--gray-50);
+      border-top: 1px solid var(--gray-200);
+      padding: 48px 5% 32px;
+      margin-top: 24px;
+    }
+
+    .footer-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .footer-col h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--gray-600);
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col a {
+      text-decoration: none;
+      color: var(--gray-800);
+      font-size: 0.85rem;
+      transition: color 0.15s;
+    }
+
+    .footer-col a:hover {
+      color: var(--blue);
+      text-decoration: underline;
+    }
+
+    .footer-copyright {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-copyright a {
+      color: var(--gray-600);
+      text-decoration: none;
+    }
+
+    .footer-copyright a:hover {
+      text-decoration: underline;
+    }
+
+    /* 纯色字母 F — 商标位 */
+    .footer-f {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gray-600);
+      line-height: 1;
+      font-family: var(--font-family);
+      letter-spacing: 0;
+      transition: color 0.15s;
+    }
+
+    .footer-f:hover {
+      color: var(--gray-900);
+    }
+
+    /* ----- 响应式 ----- */
+    @media (max-width: 1024px) {
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+      .hero {
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0 24px;
+      }
+      .nav-links {
+        display: none;
+      }
+      .hero {
+        padding: 48px 0 56px;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .section-header h2 {
+        font-size: 1.8rem;
+      }
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-inner {
+        flex-direction: column;
+      }
+      .footer-links {
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .card {
+        padding: 24px 20px 20px;
+      }
+      .card h3 {
+        font-size: 1.3rem;
+      }
+      .card-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+      }
+      .btn-primary,
+      .btn-secondary {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h2>Fanxing-Jun的资源</h2>
-    <h2>(C+一周年！！！)<h2>
-    <h4>操作系统少数部分</h4>
-    <a href="helloos.img">helloos.img </a><br>
-    <a href="mouse.jpg">mouse.jpg </a><br>
-    <h4>3D部分</h4>
-    <a herf="星穹铁道-灵砂（含武器）.zip">崩坏·星穹铁道-灵砂（含武器）</a><br>
-    <a herf="y3D.zip">原神-芙宁娜</a><br>
-    <h4>音乐</h4>
-    <a href="自制音乐.zip">自制音乐.zip</a><br>
-    <h4>编程语言</h4>
-    <h6>with部分</h6>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.7.6</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.7.5</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.7.4</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.7.3</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.7.2</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.7.1</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.6.8</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.6.7</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.6.6</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.6.5</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.6.4</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.6.3</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.6.2</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.6.1</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.6.0</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.5.9</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.5.8</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.5.7</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.5.6</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.5.5</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.5.4</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.5.3</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.5.2</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.5.1</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.5.0</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.4.8</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.4.7</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.4.6</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.4.5</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.4.4</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.4.3</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.4.2</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.4.1</a><br>
-    <a href="with_compiler-alpha.zip">with-compiler-alpha.zip 1.3.9</a><br>
-    <h6>C+部分</h6>
-    <a href="c+_compiler-stable.zip">c+_compiler-stable.zip 1.52.1</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.32</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.31</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.30</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.29</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.28</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.27</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.26</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.24</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.20</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.18</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.15</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.13</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.11</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.5</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.2</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.51.1</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.50.24</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.50.23</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.50.22</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.50.21</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.50.20</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.50.17</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.50.13</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.50.9</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.50.6</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.48.4</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.48.3</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.48.2</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.48.1</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.47.25</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.47.21</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.47.8</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.42.27</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.42.26</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.40.7</a><br>
-    <a href="c+_compiler-stable-1.zip">c+_compiler-stable.zip 1.39.6</a><br>  
+
+  <!-- ===== 顶部导览栏 ===== -->
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="#" class="brand">
+        <span class="brand-mark">F</span>
+        fanxing-jun的资源
+      </a>
+      <div class="nav-links">
+        <a href="#"></a>
+        <a href="#"></a>
+        <a href="#"></a>
+        <a href="#"></a>
+        <a href="#"></a>
+        <a href="#" style="font-weight: 700; color: var(--blue);">下载</a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="#">搜索</a>
+      <a href="#">登录</a>
+    </div>
+  </header>
+
+  <!-- ===== 主体内容 ===== -->
+  <main class="container">
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-eyebrow">面向开发者的核心工具</div>
+        <h1>构建，<span class="accent">由你定义</span></h1>
+        <p>我们提供现代、高效且富有表现力的编程语言与操作系统。无论你是系统开发者、全栈工程师还是技术探索者，都能在这里找到得心应手的工具。</p>
+        <div class="hero-actions">
+          <a href="#download" class="btn-primary">立即下载</a>
+          <a href="#" class="btn-secondary">查看文档</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-image">
+          <svg viewBox="0 0 560 380" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0078d4" stop-opacity="0.85"/>
+                <stop offset="100%" stop-color="#00b7c3" stop-opacity="0.85"/>
+              </linearGradient>
+              <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.7"/>
+                <stop offset="100%" stop-color="#d946ef" stop-opacity="0.7"/>
+              </linearGradient>
+              <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0d9488" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#22c55e" stop-opacity="0.6"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="560" height="380" rx="20" fill="#f8fbff" />
+            <circle cx="150" cy="150" r="70" fill="url(#g1)" opacity="0.9" />
+            <circle cx="400" cy="240" r="90" fill="url(#g2)" opacity="0.7" />
+            <rect x="260" y="60" width="140" height="140" rx="32" fill="url(#g3)" opacity="0.5" transform="rotate(15 330 130)" />
+            <line x1="60" y1="300" x2="500" y2="300" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8 8" opacity="0.6" />
+            <circle cx="100" cy="300" r="10" fill="#0078d4" />
+            <circle cx="280" cy="300" r="10" fill="#00b7c3" />
+            <circle cx="460" cy="300" r="10" fill="#8b5cf6" />
+            <circle cx="480" cy="80" r="6" fill="#f25022" opacity="0.8" />
+            <circle cx="520" cy="120" r="6" fill="#7fba00" opacity="0.8" />
+            <circle cx="60" cy="80" r="6" fill="#00a4ef" opacity="0.8" />
+            <circle cx="40" cy="200" r="6" fill="#ffb900" opacity="0.8" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- 下载卡片区域 -->
+    <section id="download" class="download-section">
+      <div class="section-header">
+        <h2>选择你的工具</h2>
+        <p>三种核心产品，即刻下载体验</p>
+      </div>
+
+      <div class="cards-grid">
+        <!-- 第一块：C+ 编程语言 · 青到绿 -->
+        <a href="/download/cplus" class="card card-cplus">
+          <div class="card-header">
+            <div class="card-icon">C+</div>
+            <h3>C+</h3>
+          </div>
+          <p>高性能系统编程语言，融合现代语法与底层控制。从青到绿的演进，高效且环保。</p>
+          <div class="card-footer">
+            <span class="link-text">下载 C+ 编译器 <span class="arrow">→</span></span>
+          </div>
+        </a>
+
+        <!-- 第二块：with 编程语言 · 浅蓝到青 -->
+        <a href="/download/with" class="card card-with">
+          <div class="card-header">
+            <div class="card-icon">w/</div>
+            <h3>with</h3>
+          </div>
+          <p>面向数据与并发的现代语言。浅蓝至青的视觉主题，清爽而富有表现力。</p>
+          <div class="card-footer">
+            <span class="link-text">下载 with 开发 <span class="arrow">→</span></span>
+          </div>
+        </a>
+
+        <!-- 第三块：MingOS 系统 · 蓝、粉、紫 -->
+        <a href="/download/mingos" class="card card-mingos">
+          <div class="card-header">
+            <div class="card-icon">M</div>
+            <h3>MingOS</h3>
+          </div>
+          <p>轻量、优雅的桌面操作系统。蓝、粉、紫的渐变主题，彰显个性与创造力。</p>
+          <div class="card-footer">
+            <span class="link-text">下载 MingOS 部分源码 <span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== 页脚 ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4></h4>
+          <ul>
+            <li><a href="#">C+ 语言</a></li>
+            <li><a href="#">with 语言</a></li>
+            <li><a href="#">MingOS</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4></h4>
+          <ul>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4></h4>
+          <ul>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4></h4>
+          <ul>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <span>© 2026 </span>
+        <a href="#">隐私</a>
+        <a href="#">条款</a>
+        <span class="footer-f">F</span>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>
